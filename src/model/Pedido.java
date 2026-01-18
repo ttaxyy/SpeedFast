@@ -3,13 +3,13 @@ package model;
 public class Pedido {
     protected int idPedido;
     protected Direccion direccionEntrega;
-    protected String tipoPedido;
+    protected int distanciaKm;
     protected Repartidor repartidor;
 
-    public Pedido(int idPedido, Direccion direccionEntrega, String tipoPedido, Repartidor repartidor) {
+    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm, Repartidor repartidor) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
-        this.tipoPedido = tipoPedido;
+        this.distanciaKm = distanciaKm;
         this.repartidor = repartidor;
     }
 
@@ -19,17 +19,15 @@ public class Pedido {
     public Direccion getDireccionEntrega() {return direccionEntrega;}
     public void setDireccionEntrega(Direccion direccionEntrega) {this.direccionEntrega = direccionEntrega;}
 
-    public String getTipoPedido() {return tipoPedido;}
-    public void setTipoPedido(String tipoPedido) {this.tipoPedido = tipoPedido;}
+    public int getDistanciaKm() {return distanciaKm;}
+    public void setDistanciaKm(int distanciaKm) {this.distanciaKm = distanciaKm;}
 
     public Repartidor getRepartidor() {return repartidor;}
     public void setRepartidor(Repartidor repartidor) {this.repartidor = repartidor;}
 
-    public void asignarRepartidor() {
-        System.out.println("Se ha asignado un repartidor.");
+    public void mostrarResumen() {
+        System.out.println("ID del pedido: " + idPedido + ", dirección de entrega: " + direccionEntrega + ". Repartidor asignado: " + repartidor.getNombreRepartidor() + ".");
     }
 
-    public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor.");
-    }
+    public void calcularTiempoEntrega() { } //Abstracto
 }
