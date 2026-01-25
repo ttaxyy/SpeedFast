@@ -1,10 +1,17 @@
 package model;
 
-public class Pedido {
+import interfaces.Cancelable;
+import interfaces.Despachable;
+import interfaces.Rastreable;
+
+import java.util.ArrayList;
+
+public class Pedido implements Despachable, Cancelable, Rastreable {
     protected int idPedido;
     protected Direccion direccionEntrega;
     protected int distanciaKm;
     protected Repartidor repartidor;
+    private static ArrayList<Pedido> historialEntregas = new ArrayList<>();
 
     public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm, Repartidor repartidor) {
         this.idPedido = idPedido;
@@ -38,4 +45,28 @@ public class Pedido {
     }
 
     public void calcularTiempoEntrega() { } //Abstracto
+
+    public void registrarEntrega() {
+        historialEntregas.add(this);
+    }
+
+    @Override
+    public void despachar() { }
+
+    @Override
+    public void cancelar() {
+        System.out.println("Se ha cancelado la orden " + idPedido + ".");
+    }
+
+    @Override
+    public void verHistorial() {
+        if (historialEntregas.isEmpty()) {
+            System.out.println("No hay entregas registradas aún");
+        } else {
+            for (Pedido p : historialEntregas) {
+                    System.out.println(
+                        "ID del Pedido: " + p.idPedido + ", dirección de entrega: " + direccionEntrega + ". Repartidor: " + p.repartidor.getNombreRepartidor());
+            }
+        }
+    }
 }

@@ -1,10 +1,6 @@
 package model;
 
-import interfaces.Cancelable;
-import interfaces.Despachable;
-import interfaces.Rastreable;
-
-public class PedidoEncomienda extends Pedido implements Despachable, Cancelable, Rastreable {
+public class PedidoEncomienda extends Pedido {
     private int peso; //en gramos
     private boolean embalaje;
 
@@ -44,13 +40,4 @@ public class PedidoEncomienda extends Pedido implements Despachable, Cancelable,
     public void despachar() {
         System.out.println("Se ha despachado el pedido de encomienda.");
     }
-
-    @Override
-    public void cancelar() {
-        System.out.println("Se ha cancelado la orden " + idPedido + ".");
-    }
-
-    @Override
-    public void verHistorial() {
-
-    }}
+}

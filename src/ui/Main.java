@@ -7,6 +7,7 @@ public class Main {
         Direccion direccion1 = new Direccion("Valparaíso", "Viña del Mar", "14 Norte", 1200);
         Repartidor repartidor1 = new Repartidor("Benjamín Gómez", true);
         Repartidor repartidor2 = new Repartidor("Rodrigo Castro", false);
+
         Pedido[] pedidos = {
            new PedidoComida(1, direccion1, 15, repartidor1),
            new PedidoEncomienda(2, direccion1, 15, repartidor1,40, true),
@@ -17,9 +18,24 @@ public class Main {
         };
 
         for (Pedido p : pedidos) {
-            p.mostrarResumen();
-            p.calcularTiempoEntrega();
             System.out.println("------------------------------------------------");
+            System.out.println("Pedido recibido.");
+            p.asignarRepartidor();
+            System.out.println("-----");
+            System.out.println("Ingresando manualmente repartidor...");
+
+            String nombreRepartidor = p.getRepartidor().getNombreRepartidor();
+            p.asignarRepartidor(nombreRepartidor);
+            System.out.println("Información del pedido:");
+            p.mostrarResumen();
+            System.out.println("-----");
+            p.calcularTiempoEntrega();
+            p.despachar();
+            p.cancelar();
+            p.registrarEntrega();
         }
+        System.out.println("------------------------------------------------");
+        System.out.println("Historial de todos los pedidos:");
+        pedidos[0].verHistorial();
     }
 }

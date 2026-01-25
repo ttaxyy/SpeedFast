@@ -1,10 +1,6 @@
 package model;
 
-import interfaces.Cancelable;
-import interfaces.Despachable;
-import interfaces.Rastreable;
-
-public class PedidoExpress extends Pedido implements Despachable, Cancelable, Rastreable {
+public class PedidoExpress extends Pedido {
     public PedidoExpress(int idPedido, Direccion direccionEntrega, int distanciaKm, Repartidor repartidor) {
         super(idPedido, direccionEntrega, distanciaKm, repartidor);
     }
@@ -33,15 +29,5 @@ public class PedidoExpress extends Pedido implements Despachable, Cancelable, Ra
     @Override
     public void despachar() {
         System.out.println("Se ha despachado el pedido express.");
-    }
-
-    @Override
-    public void cancelar() {
-        System.out.println("Se ha cancelado la orden " + idPedido + ".");
-    }
-
-    @Override
-    public void verHistorial() {
-
     }
 }
