@@ -31,7 +31,7 @@ public class PedidoComida extends Pedido implements Despachable, Cancelable, Ras
 
     @Override
     public void despachar() {
-        System.out.println("Se ha despachado el pedido.");
+        System.out.println("Se ha despachado el pedido de comida.");
     }
 
     @Override

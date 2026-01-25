@@ -1,6 +1,10 @@
 package model;
 
-public class PedidoEncomienda extends Pedido{
+import interfaces.Cancelable;
+import interfaces.Despachable;
+import interfaces.Rastreable;
+
+public class PedidoEncomienda extends Pedido implements Despachable, Cancelable, Rastreable {
     private int peso; //en gramos
     private boolean embalaje;
 
@@ -35,4 +39,18 @@ public class PedidoEncomienda extends Pedido{
             System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor de encomienda. El pedido no está embalado y pesa " + peso + " gramos.");
         }
     }
-}
+
+    @Override
+    public void despachar() {
+        System.out.println("Se ha despachado el pedido de encomienda.");
+    }
+
+    @Override
+    public void cancelar() {
+        System.out.println("Se ha cancelado la orden " + idPedido + ".");
+    }
+
+    @Override
+    public void verHistorial() {
+
+    }}
