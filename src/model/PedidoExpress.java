@@ -15,4 +15,14 @@ public class PedidoExpress extends Pedido{
 
         System.out.println("Tiempo de entrega calculado: " + tiempoEntrega + " minutos.");
     }
+
+    @Override
+    public void asignarRepartidor() {
+        System.out.println("Se ha asignado un repartidor express.");
+    }
+
+    @Override
+    public void asignarRepartidor(String nombreRepartidor) {
+        System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor express.");
+    }
 }

@@ -29,5 +29,13 @@ public class Pedido {
         System.out.println("ID del pedido: " + idPedido + ", dirección de entrega: " + direccionEntrega + ". Repartidor asignado: " + repartidor.getNombreRepartidor() + ".");
     }
 
+    public void asignarRepartidor() {
+        System.out.println("Se ha asignado un repartidor.");
+    }
+
+    public void asignarRepartidor(String nombreRepartidor) {
+        System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor.");
+    }
+
     public void calcularTiempoEntrega() { } //Abstracto
 }

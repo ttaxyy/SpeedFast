@@ -21,4 +21,18 @@ public class PedidoEncomienda extends Pedido{
         int tiempoEntrega = (int) (20 + (1.5 * distanciaKm)); //Usa el número entero, no redondea.
         System.out.println("Tiempo de entrega calculado: " + tiempoEntrega + " minutos.");
     }
+
+    @Override
+    public void asignarRepartidor() {
+        System.out.println("Se ha asignado un repartidor de encomienda.");
+    }
+
+    @Override
+    public void asignarRepartidor(String nombreRepartidor) {
+        if (embalaje) {
+            System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor de encomienda. El pedido está embalado y pesa " + peso + " gramos.");
+        } else {
+            System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor de encomienda. El pedido no está embalado y pesa " + peso + " gramos.");
+        }
+    }
 }
