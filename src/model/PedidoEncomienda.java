@@ -4,8 +4,8 @@ public class PedidoEncomienda extends Pedido {
     private int peso; //en gramos
     private boolean embalaje;
 
-    public PedidoEncomienda(int idPedido, Direccion direccionEntrega, int distanciaKm, Repartidor repartidor, int peso, boolean embalaje) {
-        super(idPedido, direccionEntrega, distanciaKm, repartidor);
+    public PedidoEncomienda(int idPedido, Direccion direccionEntrega, int distanciaKm, int peso, boolean embalaje) {
+        super(idPedido, direccionEntrega, distanciaKm);
         this.peso = peso;
         this.embalaje = embalaje;
     }
@@ -17,9 +17,10 @@ public class PedidoEncomienda extends Pedido {
     public void setEmbalaje(boolean embalaje) {this.embalaje = embalaje;}
 
     @Override
-    public void calcularTiempoEntrega() {
+    public int calcularTiempoEntrega() {
         int tiempoEntrega = (int) (20 + (1.5 * distanciaKm)); //Usa el número entero, no redondea.
-        System.out.println("Tiempo de entrega calculado: " + tiempoEntrega + " minutos.");
+        //System.out.println("Tiempo de entrega calculado: " + tiempoEntrega + " minutos.");
+        return tiempoEntrega;
     }
 
     @Override
@@ -28,11 +29,11 @@ public class PedidoEncomienda extends Pedido {
     }
 
     @Override
-    public void asignarRepartidor(String nombreRepartidor) {
+    public void asignarRepartidor(Repartidor repartidor) {
         if (embalaje) {
-            System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor de encomienda. El pedido está embalado y pesa " + peso + " gramos.");
+            System.out.println("Se ha asignado " + repartidor.getNombreRepartidor() + " como repartidor de encomienda. El pedido está embalado y pesa " + peso + " gramos.");
         } else {
-            System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor de encomienda. El pedido no está embalado y pesa " + peso + " gramos.");
+            System.out.println("Se ha asignado " + repartidor.getNombreRepartidor() + " como repartidor de encomienda. El pedido no está embalado y pesa " + peso + " gramos.");
         }
     }
 

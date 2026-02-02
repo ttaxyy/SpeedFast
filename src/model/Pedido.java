@@ -10,14 +10,12 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
     protected int idPedido;
     protected Direccion direccionEntrega;
     protected int distanciaKm;
-    protected Repartidor repartidor;
     private static ArrayList<Pedido> historialEntregas = new ArrayList<>();
 
-    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm, Repartidor repartidor) {
+    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
         this.distanciaKm = distanciaKm;
-        this.repartidor = repartidor;
     }
 
     public int getIdPedido() {return idPedido;}
@@ -29,22 +27,19 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
     public int getDistanciaKm() {return distanciaKm;}
     public void setDistanciaKm(int distanciaKm) {this.distanciaKm = distanciaKm;}
 
-    public Repartidor getRepartidor() {return repartidor;}
-    public void setRepartidor(Repartidor repartidor) {this.repartidor = repartidor;}
-
     public void mostrarResumen() {
-        System.out.println("ID del pedido: " + idPedido + ", dirección de entrega: " + direccionEntrega + ". Repartidor asignado: " + repartidor.getNombreRepartidor() + ".");
+        System.out.println("ID del pedido: " + idPedido + ", dirección de entrega: " + direccionEntrega + ".");
     }
 
     public void asignarRepartidor() {
         System.out.println("Se ha asignado un repartidor.");
     }
 
-    public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor.");
+    public void asignarRepartidor(Repartidor repartidor) {
+        System.out.println("Se ha asignado " + repartidor.getNombreRepartidor() + " como repartidor.");
     }
 
-    public abstract void calcularTiempoEntrega();
+    public abstract int calcularTiempoEntrega();
 
     public void registrarEntrega() {
         historialEntregas.add(this);
@@ -65,7 +60,7 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
         } else {
             for (Pedido p : historialEntregas) {
                     System.out.println(
-                        "ID del Pedido: " + p.idPedido + ", dirección de entrega: " + direccionEntrega + ". Repartidor: " + p.repartidor.getNombreRepartidor());
+                        "ID del Pedido: " + p.idPedido + ", dirección de entrega: " + direccionEntrega + ".");
             }
         }
     }
