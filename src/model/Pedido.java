@@ -6,7 +6,7 @@ import interfaces.Rastreable;
 
 import java.util.ArrayList;
 
-public class Pedido implements Despachable, Cancelable, Rastreable {
+public abstract class Pedido implements Despachable, Cancelable, Rastreable {
     protected int idPedido;
     protected Direccion direccionEntrega;
     protected int distanciaKm;
@@ -44,14 +44,14 @@ public class Pedido implements Despachable, Cancelable, Rastreable {
         System.out.println("Se ha asignado " + nombreRepartidor + " como repartidor.");
     }
 
-    public void calcularTiempoEntrega() { } //Abstracto
+    public abstract void calcularTiempoEntrega();
 
     public void registrarEntrega() {
         historialEntregas.add(this);
     }
 
     @Override
-    public void despachar() { }
+    public abstract void despachar();
 
     @Override
     public void cancelar() {
