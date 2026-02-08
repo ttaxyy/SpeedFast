@@ -6,16 +6,26 @@ import interfaces.Rastreable;
 
 import java.util.ArrayList;
 
+
+
 public abstract class Pedido implements Despachable, Cancelable, Rastreable {
+    public enum Estado {
+        PENDIENTE,
+        EN_REPARTO,
+        ENTREGADO
+    }
+
     protected int idPedido;
     protected Direccion direccionEntrega;
     protected int distanciaKm;
+    protected Estado estadoActual;
     private static ArrayList<Pedido> historialEntregas = new ArrayList<>();
 
-    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm) {
+    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm, Estado estadoActual) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
         this.distanciaKm = distanciaKm;
+        this.estadoActual = estadoActual;
     }
 
     public int getIdPedido() {return idPedido;}
@@ -26,6 +36,9 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
 
     public int getDistanciaKm() {return distanciaKm;}
     public void setDistanciaKm(int distanciaKm) {this.distanciaKm = distanciaKm;}
+
+    public Estado getEstadoActual() {return estadoActual;}
+    public void setEstadoActual(Estado estadoActual) {this.estadoActual = estadoActual;}
 
     public void mostrarResumen() {
         System.out.println("ID del pedido: " + idPedido + ", dirección de entrega: " + direccionEntrega + ".");
