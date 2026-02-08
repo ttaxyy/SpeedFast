@@ -1,8 +1,8 @@
 package model;
 
 public class PedidoExpress extends Pedido {
-    public PedidoExpress(int idPedido, Direccion direccionEntrega, int distanciaKm) {
-        super(idPedido, direccionEntrega, distanciaKm);
+    public PedidoExpress(int idPedido, Direccion direccionEntrega, int distanciaKm, Estado estadoActual) {
+        super(idPedido, direccionEntrega, distanciaKm, estadoActual);
     }
 
     @Override
