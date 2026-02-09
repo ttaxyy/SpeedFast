@@ -7,54 +7,28 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Direccion direccion1 = new Direccion("Valparaíso", "Viña del Mar", "14 Norte", 1200);
+        ZonaDeCarga zonaDeCarga = new ZonaDeCarga();
 
-        ArrayList<Pedido> pedidos1 = new ArrayList<>() {
-            {   add(new PedidoComida(1, direccion1, 15));
-                add(new PedidoEncomienda(2, direccion1, 15,40, true));
-                add(new PedidoExpress(3, direccion1, 15));
-            }
-        };
-
-        ArrayList<Pedido> pedidos2 = new ArrayList<>() {
-            {   add(new PedidoComida(4, direccion1, 7));
-                add(new PedidoEncomienda(5, direccion1, 13,20, false));
-                add(new PedidoExpress(6, direccion1, 15));
-            }
-        };
-
-        ArrayList<Pedido> pedidos3 = new ArrayList<>() {
-            {   add(new PedidoComida(7, direccion1, 16));
-                add(new PedidoEncomienda(8, direccion1, 12,15, false));
-                add(new PedidoExpress(9, direccion1, 4));
-            }
-        };
-
-        /* Repartidor[] repartidores = {
-                new Repartidor ("Benjamín Gómez", true, pedidos1),
-                new Repartidor ("Rodrigo Castro", false, pedidos2),
-                new Repartidor("Sofía Morales", true, pedidos3),
-        };
-
-
-        for (Repartidor r : repartidores) {
-            Thread thread = new Thread(r);
-            thread.start();
-        } */
+        zonaDeCarga.agregarPedido(new PedidoComida(1, direccion1, 8));
+        zonaDeCarga.agregarPedido(new PedidoEncomienda(2, direccion1, 15,40, true));
+        zonaDeCarga.agregarPedido(new PedidoExpress(3, direccion1, 10));
+        zonaDeCarga.agregarPedido(new PedidoComida(4, direccion1, 7));
+        zonaDeCarga.agregarPedido(new PedidoEncomienda(5, direccion1, 13,20, false));
+        zonaDeCarga.agregarPedido(new PedidoExpress(6, direccion1, 15));
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        executor.execute(new Repartidor ("Benjamín Gómez", true, pedidos1));
-        executor.execute(new Repartidor ("Rodrigo Castro", false, pedidos2));
-        executor.execute(new Repartidor("Sofía Morales", true, pedidos3));
-
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        for (int i = 0; i < 2; i++) { //Con este bucle, a cada repartidor se le asignan dos pedidos.
+            // Arreglar: El cuarto pedido siempre se le asigna al repartidor 1, incluso si es que ya tiene un pedido asignado.
+            executor.execute(new Repartidor ("Benjamín Gómez", true, zonaDeCarga));
+            executor.execute(new Repartidor ("Rodrigo Castro", false, zonaDeCarga));
+            executor.execute(new Repartidor("Sofía Morales", true, zonaDeCarga));
         }
 
-        executor.shutdownNow();
+        executor.shutdown();
+
+        System.out.println("Todos los pedidos han sido entregados correctamente.");
     }
 }
