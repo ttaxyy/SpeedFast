@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public abstract class Pedido implements Despachable, Cancelable, Rastreable {
-    public enum Estado {
+    public enum EstadoPedido {
         PENDIENTE,
         EN_REPARTO,
         ENTREGADO
@@ -19,14 +19,14 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
     protected int idPedido;
     protected Direccion direccionEntrega;
     protected int distanciaKm;
-    protected Estado estadoActual;
+    protected EstadoPedido estado;
     private static List<Pedido> historialEntregas = Collections.synchronizedList(new ArrayList<>());
 
-    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm, Estado estadoActual) {
+    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
         this.distanciaKm = distanciaKm;
-        this.estadoActual = estadoActual;
+        this.estado = EstadoPedido.PENDIENTE;
     }
 
     public int getIdPedido() {return idPedido;}
@@ -38,8 +38,8 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
     public int getDistanciaKm() {return distanciaKm;}
     public void setDistanciaKm(int distanciaKm) {this.distanciaKm = distanciaKm;}
 
-    public Estado getEstadoActual() {return estadoActual;}
-    public void setEstadoActual(Estado estadoActual) {this.estadoActual = estadoActual;}
+    public EstadoPedido getEstado() {return estado;}
+    public void setEstado(EstadoPedido nuevoEstado) {this.estado = nuevoEstado;}
 
     public void mostrarResumen() {
         System.out.println("ID del pedido: " + idPedido + ", dirección de entrega: " + direccionEntrega + ".");
