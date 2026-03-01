@@ -9,16 +9,21 @@ import java.util.List;
 
 public class RepartidorDAO {
     public void agregarRepartidor(Repartidor rep) {
-        String sql = "INSERT INTO repartidor (nombre) VALUES (?)";
+        String sql = "INSERT INTO repartidor (nombre, tieneMochila) VALUES (?, ?)";
 
         try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, rep.getNombreRepartidor());
+            stmt.setBoolean(2, rep.isTieneMochila());
 
             stmt.executeUpdate();
-        } catch (
-        SQLException e) {
+
+            ResultSet keys = stmt.getGeneratedKeys(); //Guarda el ID generado por sql
+            if (keys.next()) {
+                rep.setIdRepartidor(keys.getInt(1));
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al agregar repartidor.");
         }
@@ -34,9 +39,11 @@ public class RepartidorDAO {
 
             while (rs.next()) {
 
+                int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
+                boolean mochila = rs.getBoolean("tieneMochila");
 
-                Repartidor repartidor = new Repartidor(nombre, true);
+                Repartidor repartidor = new Repartidor(id, nombre, mochila);
 
                 lista.add(repartidor);
             }

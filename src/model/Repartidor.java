@@ -3,13 +3,24 @@ package model;
 import controller.ZonaDeCarga;
 
 public class Repartidor implements Runnable {
+    private int idRepartidor;
     private String nombreRepartidor;
     private boolean tieneMochila;
 
     public Repartidor(String nombreRepartidor, boolean tieneMochila) {
+        this.idRepartidor = 0;
         this.nombreRepartidor = nombreRepartidor;
         this.tieneMochila = tieneMochila;
     }
+
+    public Repartidor(int idRepartidor, String nombreRepartidor, boolean tieneMochila) {
+        this.idRepartidor = idRepartidor;
+        this.nombreRepartidor = nombreRepartidor;
+        this.tieneMochila = tieneMochila;
+    }
+
+    public int getIdRepartidor() {return idRepartidor;}
+    public void setIdRepartidor(int idRepartidor) {this.idRepartidor = idRepartidor;}
 
     public String getNombreRepartidor() {return nombreRepartidor;}
     public void setNombreRepartidor(String nombreRepartidor) {this.nombreRepartidor = nombreRepartidor;}
