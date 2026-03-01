@@ -1,5 +1,6 @@
 package ui;
 
+import controller.PedidoDAO;
 import controller.ZonaDeCarga;
 import model.*;
 
@@ -7,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VentanaRegistroPedido extends JFrame {
-    private ZonaDeCarga zonaDeCarga;
+    private PedidoDAO pedidoDAO;
 
     private JTextField txtRegion = new JTextField();
     private JTextField txtComuna = new JTextField();
@@ -23,8 +24,8 @@ public class VentanaRegistroPedido extends JFrame {
     private JTextField txtPeso = new JTextField();
     private JCheckBox  chkEmbalaje = new JCheckBox("¿Desea embalaje?"); //Boolean
 
-    public VentanaRegistroPedido(ZonaDeCarga zonaDeCarga) {
-        this.zonaDeCarga = zonaDeCarga;
+    public VentanaRegistroPedido(PedidoDAO pedidoDAO) {
+        this.pedidoDAO = pedidoDAO;
 
         setTitle("Registrar Pedido");
         setSize(400, 400);
@@ -136,7 +137,7 @@ public class VentanaRegistroPedido extends JFrame {
 
             //Agrega a zona de carga
             try {
-                zonaDeCarga.agregarPedido(nuevoPedido);
+                pedidoDAO.guardarPedido(nuevoPedido);
                 JOptionPane.showMessageDialog(this,
                         "Pedido registrado con éxito.");
                 dispose();

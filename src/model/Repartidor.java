@@ -6,7 +6,7 @@ public class Repartidor implements Runnable {
     private String nombreRepartidor;
     private boolean tieneMochila;
 
-    public Repartidor(String nombreRepartidor, boolean tieneMochila, ZonaDeCarga zonaDeCarga) {
+    public Repartidor(String nombreRepartidor, boolean tieneMochila) {
         this.nombreRepartidor = nombreRepartidor;
         this.tieneMochila = tieneMochila;
     }

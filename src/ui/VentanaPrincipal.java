@@ -1,5 +1,6 @@
 package ui;
 
+import controller.PedidoDAO;
 import controller.ZonaDeCarga;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 
 public class VentanaPrincipal extends JFrame {
 
-    private final ZonaDeCarga zonaDeCarga = new ZonaDeCarga();
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
 
     public VentanaPrincipal() {
         setTitle("Speedfast");
@@ -30,11 +31,11 @@ public class VentanaPrincipal extends JFrame {
         add(panel, BorderLayout.CENTER);
 
         btnRegistrar.addActionListener(e ->
-                new VentanaRegistroPedido(zonaDeCarga).setVisible(true)
+                new VentanaRegistroPedido(pedidoDAO).setVisible(true)
         );
 
         btnListar.addActionListener(e ->
-                new VentanaListaPedidos(zonaDeCarga).setVisible(true)
+                new VentanaListaPedidos(pedidoDAO).setVisible(true)
         );
     }
 }
