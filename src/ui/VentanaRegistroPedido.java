@@ -9,13 +9,12 @@ import java.awt.*;
 public class VentanaRegistroPedido extends JFrame {
     private ZonaDeCarga zonaDeCarga;
 
-    private JTextField txtId = new JTextField();
     private JTextField txtRegion = new JTextField();
     private JTextField txtComuna = new JTextField();
     private JTextField txtCalle = new JTextField();
     private JTextField txtNumero = new JTextField();
     private JComboBox<String> TipoCB = new JComboBox<>(
-            new String[]{"Comida", "Encomienda", "Express"}
+        new String[]{"Comida", "Encomienda", "Express"}
     );
 
     private JPanel panelExtra;
@@ -33,9 +32,6 @@ public class VentanaRegistroPedido extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(7, 2, 8, 8));
         panel.setBorder(BorderFactory.createTitledBorder("Datos del pedido"));
-
-        panel.add(new JLabel("ID:"));
-        panel.add(txtId);
 
         panel.add(new JLabel("Región:"));
         panel.add(txtRegion);
@@ -82,7 +78,7 @@ public class VentanaRegistroPedido extends JFrame {
         btnGuardar.addActionListener(e -> {
             String tipo = (String) TipoCB.getSelectedItem();
 
-            if (txtId.getText().trim().isEmpty() || txtRegion.getText().trim().isEmpty() || txtComuna.getText().trim().isEmpty() ||
+            if (txtRegion.getText().trim().isEmpty() || txtComuna.getText().trim().isEmpty() ||
                     txtCalle.getText().trim().isEmpty() || txtNumero.getText().trim().isEmpty()) {
 
                 JOptionPane.showMessageDialog(this,
@@ -91,36 +87,28 @@ public class VentanaRegistroPedido extends JFrame {
                 return;
             }
 
-            int id, numero; //Cambia strings a ints
+            int numero; //Cambia string a int
             try {
-                id = Integer.parseInt(txtId.getText().trim());
                 numero = Integer.parseInt(txtNumero.getText().trim());
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        "ID y número de calle deben ser valores numéricos.",
+                        "Número de calle debe ser valor numérico.",
                         "Error de formato", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            if (zonaDeCarga.existePedido(id)) {
-                JOptionPane.showMessageDialog(this,
-                        "Ya existe un pedido con ese ID.", //Maneja que no hayan ids repetidos
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-                Direccion dir = new Direccion( //Junta valores para crear objeto dirección
-                    txtRegion.getText().trim(),
-                    txtComuna.getText().trim(),
-                    txtCalle.getText().trim(),
-                    numero
+            Direccion dir = new Direccion( //Junta valores para crear objeto dirección
+                txtRegion.getText().trim(),
+                txtComuna.getText().trim(),
+                txtCalle.getText().trim(),
+                numero
             );
 
             Pedido nuevoPedido = null;
 
             switch (tipo) {
-                case "Comida" -> nuevoPedido = new PedidoComida(id, dir, 10); //distancia en kms hardcodeados
-                case "Express" -> nuevoPedido = new PedidoExpress(id, dir, 15); // ^^
+                case "Comida" -> nuevoPedido = new PedidoComida(dir, 10); //distancia en kms hardcodeados
+                case "Express" -> nuevoPedido = new PedidoExpress(dir, 15); // ^^
 
                 case "Encomienda" -> {
                     int peso;
@@ -142,7 +130,7 @@ public class VentanaRegistroPedido extends JFrame {
                         return;
                     }
 
-                    nuevoPedido = new PedidoEncomienda(id, dir, 16, peso, embalaje); //distancia hardcodeada también
+                    nuevoPedido = new PedidoEncomienda(dir, 16, peso, embalaje); //distancia hardcodeada también
                 }
             }
 
