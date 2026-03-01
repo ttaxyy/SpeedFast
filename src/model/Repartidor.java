@@ -5,13 +5,10 @@ import controller.ZonaDeCarga;
 public class Repartidor implements Runnable {
     private String nombreRepartidor;
     private boolean tieneMochila;
-    //private ArrayList<Pedido> pedidosAsignados;
-    private ZonaDeCarga zonaDeCarga;
 
     public Repartidor(String nombreRepartidor, boolean tieneMochila, ZonaDeCarga zonaDeCarga) {
         this.nombreRepartidor = nombreRepartidor;
         this.tieneMochila = tieneMochila;
-        this.zonaDeCarga = zonaDeCarga;
     }
 
     public String getNombreRepartidor() {return nombreRepartidor;}
@@ -20,13 +17,10 @@ public class Repartidor implements Runnable {
     public boolean isTieneMochila() {return tieneMochila;}
     public void setTieneMochila(boolean tieneMochila) {this.tieneMochila = tieneMochila;}
 
-    //public ArrayList<Pedido> getPedidosAsignados() {return pedidosAsignados;}
-    //public void setPedidosAsignados(ArrayList<Pedido> pedidosAsignados) {this.pedidosAsignados = pedidosAsignados;}
-
     @Override
     public void run() {
-        try {
-            Pedido pedido = zonaDeCarga.retirarPedido();
+        /*try {
+            Pedido pedido = zonaDeCarga.listarPedidos();
             if (pedido == null) {
                 System.out.println("No hay pedidos.");
                 return;
@@ -43,6 +37,6 @@ public class Repartidor implements Runnable {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.out.println("Se ha interrumpido la entrega.");
-        }
+        }*/
     }
 }

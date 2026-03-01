@@ -2,14 +2,8 @@ package model;
 
 import interfaces.Cancelable;
 import interfaces.Despachable;
-import interfaces.Rastreable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-
-public abstract class Pedido implements Despachable, Cancelable, Rastreable {
+public abstract class Pedido implements Despachable, Cancelable {
     public enum EstadoPedido {
         PENDIENTE,
         EN_REPARTO,
@@ -20,7 +14,13 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
     protected Direccion direccionEntrega;
     protected int distanciaKm;
     protected EstadoPedido estado;
-    private static List<Pedido> historialEntregas = Collections.synchronizedList(new ArrayList<>());
+
+    public Pedido(Direccion direccionEntrega, int distanciaKm) { //Constructor sin ID
+        this.idPedido = 0;
+        this.direccionEntrega = direccionEntrega;
+        this.distanciaKm = distanciaKm;
+        this.estado = EstadoPedido.PENDIENTE;
+    }
 
     public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm) {
         this.idPedido = idPedido;
@@ -55,27 +55,11 @@ public abstract class Pedido implements Despachable, Cancelable, Rastreable {
 
     public abstract int calcularTiempoEntrega();
 
-    public void registrarEntrega() {
-        historialEntregas.add(this);
-    }
-
     @Override
     public abstract void despachar();
 
     @Override
     public void cancelar() {
         System.out.println("Se ha cancelado la orden " + idPedido + ".");
-    }
-
-    @Override
-    public void verHistorial() {
-        if (historialEntregas.isEmpty()) {
-            System.out.println("No hay entregas registradas aún");
-        } else {
-            for (Pedido p : historialEntregas) {
-                    System.out.println(
-                        "ID del Pedido: " + p.idPedido + ", dirección de entrega: " + direccionEntrega + ".");
-            }
-        }
     }
 }

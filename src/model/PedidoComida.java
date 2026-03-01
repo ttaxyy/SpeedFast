@@ -1,6 +1,10 @@
 package model;
 
 public class PedidoComida extends Pedido{
+    public PedidoComida(Direccion direccionEntrega, int distanciaKm) {
+        super(direccionEntrega, distanciaKm);
+    }
+
     public PedidoComida(int idPedido, Direccion direccionEntrega, int distanciaKm) {
         super(idPedido, direccionEntrega, distanciaKm);
     }

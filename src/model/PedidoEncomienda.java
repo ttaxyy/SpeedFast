@@ -4,6 +4,12 @@ public class PedidoEncomienda extends Pedido {
     private int peso; //en gramos
     private boolean embalaje;
 
+    public PedidoEncomienda(Direccion direccionEntrega, int distanciaKm, int peso, boolean embalaje) {
+        super(direccionEntrega, distanciaKm);
+        this.peso = peso;
+        this.embalaje = embalaje;
+    }
+
     public PedidoEncomienda(int idPedido, Direccion direccionEntrega, int distanciaKm, int peso, boolean embalaje) {
         super(idPedido, direccionEntrega, distanciaKm);
         this.peso = peso;
