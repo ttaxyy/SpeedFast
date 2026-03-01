@@ -101,7 +101,14 @@ public class VentanaRegistroPedido extends JFrame {
                 return;
             }
 
-            Direccion dir = new Direccion( //Junta valores para crear objeto dirección
+            if (zonaDeCarga.existePedido(id)) {
+                JOptionPane.showMessageDialog(this,
+                        "Ya existe un pedido con ese ID.", //Maneja que no hayan ids repetidos
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+                Direccion dir = new Direccion( //Junta valores para crear objeto dirección
                     txtRegion.getText().trim(),
                     txtComuna.getText().trim(),
                     txtCalle.getText().trim(),
