@@ -1,20 +1,20 @@
-package vista;
+package ui;
 
-import dao.PedidoDAO;
 import model.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class VentanaRegistroPedido extends JFrame {
-    private PedidoDAO pedidoDAO;
+    private ZonaDeCarga zonaDeCarga;
 
+    private JTextField txtId = new JTextField();
     private JTextField txtRegion = new JTextField();
     private JTextField txtComuna = new JTextField();
     private JTextField txtCalle = new JTextField();
     private JTextField txtNumero = new JTextField();
     private JComboBox<String> TipoCB = new JComboBox<>(
-        new String[]{"COMIDA", "ENCOMIENDA", "EXPRESS"}
+            new String[]{"Comida", "Encomienda", "Express"}
     );
 
     private JPanel panelExtra;
@@ -23,8 +23,8 @@ public class VentanaRegistroPedido extends JFrame {
     private JTextField txtPeso = new JTextField();
     private JCheckBox  chkEmbalaje = new JCheckBox("¿Desea embalaje?"); //Boolean
 
-    public VentanaRegistroPedido(PedidoDAO pedidoDAO) {
-        this.pedidoDAO = pedidoDAO;
+    public VentanaRegistroPedido(ZonaDeCarga zonaDeCarga) {
+        this.zonaDeCarga = zonaDeCarga;
 
         setTitle("Registrar Pedido");
         setSize(400, 400);
@@ -32,6 +32,9 @@ public class VentanaRegistroPedido extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(7, 2, 8, 8));
         panel.setBorder(BorderFactory.createTitledBorder("Datos del pedido"));
+
+        panel.add(new JLabel("ID:"));
+        panel.add(txtId);
 
         panel.add(new JLabel("Región:"));
         panel.add(txtRegion);
@@ -44,7 +47,6 @@ public class VentanaRegistroPedido extends JFrame {
 
         panel.add(new JLabel("Tipo:"));
         panel.add(TipoCB);
-        //TODO: Agregar selección de estado
 
         cardLayout = new CardLayout();
         panelExtra = new JPanel(cardLayout);
@@ -60,9 +62,9 @@ public class VentanaRegistroPedido extends JFrame {
         panelEncomienda.add(new JLabel(""));
         panelEncomienda.add(chkEmbalaje);
 
-        panelExtra.add(panelVacio,"COMIDA"); //TODO: Solucionar el que aparezcan datos adicionales para comida
-        panelExtra.add(panelEncomienda,"ENCOMIENDA");
-        panelExtra.add(panelVacio,"EXPRESS");
+        panelExtra.add(panelVacio,"Comida"); //TODO: Solucionar el que aparezcan datos adicionales para comida
+        panelExtra.add(panelEncomienda,"Encomienda");
+        panelExtra.add(panelVacio,"Express");
 
         TipoCB.addActionListener(e -> {
             String tipo = (String) TipoCB.getSelectedItem();
@@ -79,7 +81,7 @@ public class VentanaRegistroPedido extends JFrame {
         btnGuardar.addActionListener(e -> {
             String tipo = (String) TipoCB.getSelectedItem();
 
-            if (txtRegion.getText().trim().isEmpty() || txtComuna.getText().trim().isEmpty() ||
+            if (txtId.getText().trim().isEmpty() || txtRegion.getText().trim().isEmpty() || txtComuna.getText().trim().isEmpty() ||
                     txtCalle.getText().trim().isEmpty() || txtNumero.getText().trim().isEmpty()) {
 
                 JOptionPane.showMessageDialog(this,
@@ -88,30 +90,38 @@ public class VentanaRegistroPedido extends JFrame {
                 return;
             }
 
-            int numero; //Cambia string a int
+            int id, numero; //Cambia strings a ints
             try {
+                id = Integer.parseInt(txtId.getText().trim());
                 numero = Integer.parseInt(txtNumero.getText().trim());
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
-                        "Número de calle debe ser valor numérico.",
+                        "ID y número de calle deben ser valores numéricos.",
                         "Error de formato", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            Direccion dir = new Direccion( //Junta valores para crear objeto dirección
-                txtRegion.getText().trim(),
-                txtComuna.getText().trim(),
-                txtCalle.getText().trim(),
-                numero
+            if (zonaDeCarga.existePedido(id)) {
+                JOptionPane.showMessageDialog(this,
+                        "Ya existe un pedido con ese ID.", //Maneja que no hayan ids repetidos
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+                Direccion dir = new Direccion( //Junta valores para crear objeto dirección
+                    txtRegion.getText().trim(),
+                    txtComuna.getText().trim(),
+                    txtCalle.getText().trim(),
+                    numero
             );
 
             Pedido nuevoPedido = null;
 
             switch (tipo) {
-                case "COMIDA" -> nuevoPedido = new PedidoComida(dir);
-                case "EXPRESS" -> nuevoPedido = new PedidoExpress(dir);
+                case "Comida" -> nuevoPedido = new PedidoComida(id, dir, 10); //distancia en kms hardcodeados
+                case "Express" -> nuevoPedido = new PedidoExpress(id, dir, 15); // ^^
 
-                case "ENCOMIENDA" -> {
+                case "Encomienda" -> {
                     int peso;
                     boolean embalaje = chkEmbalaje.isSelected();
 
@@ -131,16 +141,17 @@ public class VentanaRegistroPedido extends JFrame {
                         return;
                     }
 
-                    nuevoPedido = new PedidoEncomienda(dir, peso, embalaje);
+                    nuevoPedido = new PedidoEncomienda(id, dir, 16, peso, embalaje); //distancia hardcodeada también
                 }
             }
 
+            //Agrega a zona de carga
             try {
-                pedidoDAO.guardarPedido(nuevoPedido);
+                zonaDeCarga.agregarPedido(nuevoPedido);
                 JOptionPane.showMessageDialog(this,
                         "Pedido registrado con éxito.");
                 dispose();
-            } catch (IllegalArgumentException err) {
+            } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(this,
                         "Error al agregar el pedido a la zona de carga.",
                         "Error", JOptionPane.ERROR_MESSAGE);

@@ -4,14 +4,8 @@ public class PedidoEncomienda extends Pedido {
     private int peso; //en gramos
     private boolean embalaje;
 
-    public PedidoEncomienda(Direccion direccionEntrega, int peso, boolean embalaje) {
-        super(direccionEntrega);
-        this.peso = peso;
-        this.embalaje = embalaje;
-    }
-
-    public PedidoEncomienda(int idPedido, Direccion direccionEntrega, int peso, boolean embalaje) {
-        super(idPedido, direccionEntrega);
+    public PedidoEncomienda(int idPedido, Direccion direccionEntrega, int distanciaKm, int peso, boolean embalaje) {
+        super(idPedido, direccionEntrega, distanciaKm);
         this.peso = peso;
         this.embalaje = embalaje;
     }
@@ -22,9 +16,10 @@ public class PedidoEncomienda extends Pedido {
     public boolean isEmbalaje() {return embalaje;}
     public void setEmbalaje(boolean embalaje) {this.embalaje = embalaje;}
 
-    @Override //Eliminar
+    @Override
     public int calcularTiempoEntrega() {
-        int tiempoEntrega = (int) (20 + (1.5 * 0)); //Usa el número entero, no redondea.
+        int tiempoEntrega = (int) (20 + (1.5 * distanciaKm)); //Usa el número entero, no redondea.
+        //System.out.println("Tiempo de entrega calculado: " + tiempoEntrega + " minutos.");
         return tiempoEntrega;
     }
 

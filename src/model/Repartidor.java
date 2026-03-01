@@ -1,26 +1,18 @@
 package model;
 
-import controller.ZonaDeCarga;
+import java.util.ArrayList;
 
 public class Repartidor implements Runnable {
-    private int idRepartidor;
     private String nombreRepartidor;
     private boolean tieneMochila;
+    //private ArrayList<Pedido> pedidosAsignados;
+    private ZonaDeCarga zonaDeCarga;
 
-    public Repartidor(String nombreRepartidor, boolean tieneMochila) {
-        this.idRepartidor = 0;
+    public Repartidor(String nombreRepartidor, boolean tieneMochila, ZonaDeCarga zonaDeCarga) {
         this.nombreRepartidor = nombreRepartidor;
         this.tieneMochila = tieneMochila;
+        this.zonaDeCarga = zonaDeCarga;
     }
-
-    public Repartidor(int idRepartidor, String nombreRepartidor, boolean tieneMochila) {
-        this.idRepartidor = idRepartidor;
-        this.nombreRepartidor = nombreRepartidor;
-        this.tieneMochila = tieneMochila;
-    }
-
-    public int getIdRepartidor() {return idRepartidor;}
-    public void setIdRepartidor(int idRepartidor) {this.idRepartidor = idRepartidor;}
 
     public String getNombreRepartidor() {return nombreRepartidor;}
     public void setNombreRepartidor(String nombreRepartidor) {this.nombreRepartidor = nombreRepartidor;}
@@ -28,10 +20,13 @@ public class Repartidor implements Runnable {
     public boolean isTieneMochila() {return tieneMochila;}
     public void setTieneMochila(boolean tieneMochila) {this.tieneMochila = tieneMochila;}
 
+    //public ArrayList<Pedido> getPedidosAsignados() {return pedidosAsignados;}
+    //public void setPedidosAsignados(ArrayList<Pedido> pedidosAsignados) {this.pedidosAsignados = pedidosAsignados;}
+
     @Override
     public void run() {
-        /*try {
-            Pedido pedido = zonaDeCarga.listarPedidos();
+        try {
+            Pedido pedido = zonaDeCarga.retirarPedido();
             if (pedido == null) {
                 System.out.println("No hay pedidos.");
                 return;
@@ -48,6 +43,6 @@ public class Repartidor implements Runnable {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.out.println("Se ha interrumpido la entrega.");
-        }*/
+        }
     }
 }
