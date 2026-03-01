@@ -1,15 +1,25 @@
 package ui;
 
+import controller.ConexionBD;
 import model.*;
 
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        SwingUtilities.invokeLater(() -> new VentanaPrincipal().setVisible(true));
+        //SwingUtilities.invokeLater(() -> new VentanaPrincipal().setVisible(true));
+
+        try (Connection conn = ConexionBD.obtenerConexion()) {
+            System.out.println("✅ Conexión exitosa a la base de datos.");
+        } catch (SQLException e) {
+            System.err.println("❌ Error al conectar con la base de datos:");
+            e.printStackTrace();
+        }
 
         /*ExecutorService executor = Executors.newFixedThreadPool(3);
 
