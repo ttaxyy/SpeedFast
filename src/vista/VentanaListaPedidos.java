@@ -1,20 +1,20 @@
-package ui;
+package vista;
 
+import dao.PedidoDAO;
 import model.Pedido;
 import model.PedidoComida;
 import model.PedidoEncomienda;
-import model.ZonaDeCarga;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class VentanaListaPedidos extends JFrame {
-    private ZonaDeCarga zonaDeCarga;
+    private PedidoDAO pedidoDAO;
     private DefaultTableModel tableModel;
 
-    public VentanaListaPedidos(ZonaDeCarga zonaDeCarga) {
-        this.zonaDeCarga = zonaDeCarga;
+    public VentanaListaPedidos(PedidoDAO pedidoDAO) {
+        this.pedidoDAO = pedidoDAO;
 
         setTitle("Lista de Pedidos");
         setSize(800, 400);
@@ -36,7 +36,7 @@ public class VentanaListaPedidos extends JFrame {
     private void cargarDatos() {
         tableModel.setRowCount(0); // limpia la tabla antes de recargar
 
-        for (Pedido p : zonaDeCarga.listarPedidos()) {
+        for (Pedido p : pedidoDAO.listarPedidos()) {
             tableModel.addRow(new Object[]{
                     p.getIdPedido(),
                     p.getDireccionEntrega(),
@@ -48,11 +48,11 @@ public class VentanaListaPedidos extends JFrame {
 
     private String getTipo(Pedido p) {
         if (p instanceof PedidoComida){
-            return "Comida";
+            return "COMIDA";
         }else if (p instanceof PedidoEncomienda) {
-            return "Encomienda";
+            return "ENCOMIENDA";
         } else {
-            return "Express";
+            return "EXPRESS";
         }
     }
 }

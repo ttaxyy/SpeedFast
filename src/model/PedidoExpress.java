@@ -1,19 +1,22 @@
 package model;
 
 public class PedidoExpress extends Pedido {
-    public PedidoExpress(int idPedido, Direccion direccionEntrega, int distanciaKm) {
-        super(idPedido, direccionEntrega, distanciaKm);
+    public PedidoExpress(Direccion direccionEntrega) {
+        super(direccionEntrega);
+    }
+
+    public PedidoExpress(int idPedido, Direccion direccionEntrega) {
+        super(idPedido, direccionEntrega);
     }
 
     @Override
     public int calcularTiempoEntrega() {
         int tiempoEntrega = 10;
 
-        if (distanciaKm > 5) {
+        /*if (distanciaKm > 5) {
             tiempoEntrega = 15;
-        }
+        }*/
 
-        //System.out.println("Tiempo de entrega calculado: " + tiempoEntrega + " minutos.");
         return tiempoEntrega;
     }
 
