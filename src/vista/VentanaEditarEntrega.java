@@ -1,4 +1,6 @@
 package vista;
 
-public class VentanaEditarEntrega {
+import javax.swing.*;
+
+public class VentanaEditarEntrega extends JFrame {
 }

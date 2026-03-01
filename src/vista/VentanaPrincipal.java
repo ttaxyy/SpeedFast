@@ -1,5 +1,6 @@
 package vista;
 
+import dao.EntregaDAO;
 import dao.PedidoDAO;
 import dao.RepartidorDAO;
 
@@ -7,9 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VentanaPrincipal extends JFrame {
-
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final RepartidorDAO repartidorDAO = new RepartidorDAO();
+    private final EntregaDAO entregaDAO = new EntregaDAO();
 
     public VentanaPrincipal() {
         setTitle("Speedfast");
@@ -68,6 +69,11 @@ public class VentanaPrincipal extends JFrame {
         btnListRep.addActionListener(e ->
                 new VentanaListaRepartidores(repartidorDAO).setVisible(true)
         );
+
+        //TODO: Iniciar: Crear ventana para seleccionar con combobox Pedido y Repartidor
+        /*btnIniciar.addActionListener(e ->
+
+        );*/
     }
 }
 

@@ -1,4 +1,6 @@
 package vista;
 
-public class VentanaListaEntregas {
+import javax.swing.*;
+
+public class VentanaListaEntregas extends JFrame {
 }
