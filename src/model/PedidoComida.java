@@ -1,18 +1,17 @@
 package model;
 
 public class PedidoComida extends Pedido{
-    public PedidoComida(Direccion direccionEntrega, int distanciaKm) {
-        super(direccionEntrega, distanciaKm);
+    public PedidoComida(Direccion direccionEntrega) {
+        super(direccionEntrega);
     }
 
-    public PedidoComida(int idPedido, Direccion direccionEntrega, int distanciaKm) {
-        super(idPedido, direccionEntrega, distanciaKm);
+    public PedidoComida(int idPedido, Direccion direccionEntrega) {
+        super(idPedido, direccionEntrega);
     }
 
-    @Override
+    @Override //Eliminar
     public int calcularTiempoEntrega() {
-        int tiempoEntrega = 15 + (2 * distanciaKm);
-        //System.out.println("Tiempo de entrega calculado: " + tiempoEntrega + " minutos.");
+        int tiempoEntrega = 15 + (2 * 0);
         return tiempoEntrega;
     }
 

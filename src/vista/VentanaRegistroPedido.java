@@ -1,7 +1,6 @@
-package ui;
+package vista;
 
-import controller.PedidoDAO;
-import controller.ZonaDeCarga;
+import dao.PedidoDAO;
 import model.*;
 
 import javax.swing.*;
@@ -15,7 +14,7 @@ public class VentanaRegistroPedido extends JFrame {
     private JTextField txtCalle = new JTextField();
     private JTextField txtNumero = new JTextField();
     private JComboBox<String> TipoCB = new JComboBox<>(
-        new String[]{"Comida", "Encomienda", "Express"}
+        new String[]{"COMIDA", "ENCOMIENDA", "EXPRESS"}
     );
 
     private JPanel panelExtra;
@@ -45,6 +44,7 @@ public class VentanaRegistroPedido extends JFrame {
 
         panel.add(new JLabel("Tipo:"));
         panel.add(TipoCB);
+        //TODO: Agregar selección de estado
 
         cardLayout = new CardLayout();
         panelExtra = new JPanel(cardLayout);
@@ -60,9 +60,9 @@ public class VentanaRegistroPedido extends JFrame {
         panelEncomienda.add(new JLabel(""));
         panelEncomienda.add(chkEmbalaje);
 
-        panelExtra.add(panelVacio,"Comida"); //TODO: Solucionar el que aparezcan datos adicionales para comida
-        panelExtra.add(panelEncomienda,"Encomienda");
-        panelExtra.add(panelVacio,"Express");
+        panelExtra.add(panelVacio,"COMIDA"); //TODO: Solucionar el que aparezcan datos adicionales para comida
+        panelExtra.add(panelEncomienda,"ENCOMIENDA");
+        panelExtra.add(panelVacio,"EXPRESS");
 
         TipoCB.addActionListener(e -> {
             String tipo = (String) TipoCB.getSelectedItem();
@@ -108,10 +108,10 @@ public class VentanaRegistroPedido extends JFrame {
             Pedido nuevoPedido = null;
 
             switch (tipo) {
-                case "Comida" -> nuevoPedido = new PedidoComida(dir, 10); //distancia en kms hardcodeados
-                case "Express" -> nuevoPedido = new PedidoExpress(dir, 15); // ^^
+                case "COMIDA" -> nuevoPedido = new PedidoComida(dir);
+                case "EXPRESS" -> nuevoPedido = new PedidoExpress(dir);
 
-                case "Encomienda" -> {
+                case "ENCOMIENDA" -> {
                     int peso;
                     boolean embalaje = chkEmbalaje.isSelected();
 
@@ -131,17 +131,16 @@ public class VentanaRegistroPedido extends JFrame {
                         return;
                     }
 
-                    nuevoPedido = new PedidoEncomienda(dir, 16, peso, embalaje); //distancia hardcodeada también
+                    nuevoPedido = new PedidoEncomienda(dir, peso, embalaje);
                 }
             }
 
-            //Agrega a zona de carga
             try {
                 pedidoDAO.guardarPedido(nuevoPedido);
                 JOptionPane.showMessageDialog(this,
                         "Pedido registrado con éxito.");
                 dispose();
-            } catch (InterruptedException ex) {
+            } catch (IllegalArgumentException err) {
                 JOptionPane.showMessageDialog(this,
                         "Error al agregar el pedido a la zona de carga.",
                         "Error", JOptionPane.ERROR_MESSAGE);

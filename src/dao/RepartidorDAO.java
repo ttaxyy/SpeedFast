@@ -1,5 +1,6 @@
-package controller;
+package dao;
 
+import controller.ConexionBD;
 import model.*;
 
 import javax.swing.*;
@@ -26,6 +27,38 @@ public class RepartidorDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al agregar repartidor.");
+        }
+    }
+
+    public void editarRepartidor(int id, Repartidor rep) {
+        String sql = "UPDATE repartidor SET nombre=?, tieneMochila=? WHERE id=?";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, rep.getNombreRepartidor());
+            stmt.setBoolean(2, rep.isTieneMochila());
+            stmt.setInt(3, rep.getIdRepartidor());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al editar repartidor.");
+        }
+    }
+
+    public void eliminarRepartidor(int id) {
+        String sql = "DELETE FROM repartidor WHERE id=?";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al eliminar el repartidor de la base de datos.");
         }
     }
 

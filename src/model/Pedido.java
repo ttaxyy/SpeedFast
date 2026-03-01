@@ -10,22 +10,25 @@ public abstract class Pedido implements Despachable, Cancelable {
         ENTREGADO
     }
 
+    public enum TipoPedido {
+        COMIDA,
+        ENCOMIENDA,
+        EXPRESS
+    }
+
     protected int idPedido;
     protected Direccion direccionEntrega;
-    protected int distanciaKm;
     protected EstadoPedido estado;
 
-    public Pedido(Direccion direccionEntrega, int distanciaKm) { //Constructor sin ID
+    public Pedido(Direccion direccionEntrega) { //Constructor sin ID
         this.idPedido = 0;
         this.direccionEntrega = direccionEntrega;
-        this.distanciaKm = distanciaKm;
         this.estado = EstadoPedido.PENDIENTE;
     }
 
-    public Pedido(int idPedido, Direccion direccionEntrega, int distanciaKm) {
+    public Pedido(int idPedido, Direccion direccionEntrega) {
         this.idPedido = idPedido;
         this.direccionEntrega = direccionEntrega;
-        this.distanciaKm = distanciaKm;
         this.estado = EstadoPedido.PENDIENTE;
     }
 
@@ -34,9 +37,6 @@ public abstract class Pedido implements Despachable, Cancelable {
 
     public Direccion getDireccionEntrega() {return direccionEntrega;}
     public void setDireccionEntrega(Direccion direccionEntrega) {this.direccionEntrega = direccionEntrega;}
-
-    public int getDistanciaKm() {return distanciaKm;}
-    public void setDistanciaKm(int distanciaKm) {this.distanciaKm = distanciaKm;}
 
     public EstadoPedido getEstado() {return estado;}
     public void setEstado(EstadoPedido nuevoEstado) {this.estado = nuevoEstado;}

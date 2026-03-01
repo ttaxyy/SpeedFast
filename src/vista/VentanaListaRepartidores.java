@@ -1,7 +1,6 @@
-package ui;
+package vista;
 
-import controller.RepartidorDAO;
-import model.Pedido;
+import dao.RepartidorDAO;
 import model.Repartidor;
 
 import javax.swing.*;

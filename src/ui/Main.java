@@ -1,5 +1,7 @@
 package ui;
 
+import vista.VentanaPrincipal;
+
 import javax.swing.*;
 
 public class Main {

@@ -1,10 +1,9 @@
-package ui;
+package vista;
 
-import controller.PedidoDAO;
+import dao.PedidoDAO;
 import model.Pedido;
 import model.PedidoComida;
 import model.PedidoEncomienda;
-import controller.ZonaDeCarga;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -49,11 +48,11 @@ public class VentanaListaPedidos extends JFrame {
 
     private String getTipo(Pedido p) {
         if (p instanceof PedidoComida){
-            return "Comida";
+            return "COMIDA";
         }else if (p instanceof PedidoEncomienda) {
-            return "Encomienda";
+            return "ENCOMIENDA";
         } else {
-            return "Express";
+            return "EXPRESS";
         }
     }
 }
