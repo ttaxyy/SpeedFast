@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import controller.ZonaDeCarga;
 
 public class Repartidor implements Runnable {
     private String nombreRepartidor;

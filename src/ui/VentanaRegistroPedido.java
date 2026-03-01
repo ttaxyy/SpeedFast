@@ -1,5 +1,6 @@
 package ui;
 
+import controller.ZonaDeCarga;
 import model.*;
 
 import javax.swing.*;

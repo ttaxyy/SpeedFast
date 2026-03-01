@@ -3,7 +3,7 @@ package ui;
 import model.Pedido;
 import model.PedidoComida;
 import model.PedidoEncomienda;
-import model.ZonaDeCarga;
+import controller.ZonaDeCarga;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

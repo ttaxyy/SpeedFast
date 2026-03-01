@@ -1,4 +1,6 @@
-package model;
+package controller;
+
+import model.Pedido;
 
 import java.util.ArrayList;
 import java.util.List;
