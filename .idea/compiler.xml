@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="DOOII_Exp1_S1_Javiera_Puga" />
+        <module name="speedfast" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DOOII_Exp1_S1_Javiera_Puga" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
